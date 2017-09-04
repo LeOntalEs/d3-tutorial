@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>B A S I C - S V G </title>
+    <script type="text/javascript" src='http://d3js.org/d3.v3.min.js'></script>
+</head>
+<body>
+
+    <script type="text/javascript">
+        function update(datas) {
+            var maxval = Math.max(...datas);
+            var scale = d3.scale.linear()
+                .domain([0, maxval]);
+            var color = d3.scale.linear()
+                .domain([0, maxval])
+                .range(["red", "blue"]);
+            var axis = d3.svg.axis().scale(scale);
+            return {'scale': scale, 'color':color, 'axis':axis};
+        }
+
+        var datas = [10, 20, 30]
+        ret = update(datas)
+        scale = ret['scale'];
+        color = ret['color'];
+        axis = ret['axis']
+        console.log(color)
+        var canvas = d3.select('body')
+                .append('svg')
+                    .attr('width', 500)
+                    .attr('height', 500)
+                .append('g')
+
+
+        var bars = canvas.selectAll('rect')
+            .data(datas)
+            .enter()
+                .append('rect')
+                    .attr('width', function(d) { return d; })
+                    .attr('height', 50)
+                    .attr('fill', function(d) {return color(d);})
+                    .attr('y', function(d, i) { return i*60; })
+
+        var gr = canvas.selectAll('g')
+                
+    </script>
+
+</body>
+</html>
